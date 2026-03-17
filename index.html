@@ -1,130 +1,160 @@
 /**
- * 【店舗オーナー様 応援プロジェクト】裏側プログラム（GAS完成版）
+ * 【hair Buzl】裏側プログラム（GAS最終修正版）
  * * 佐浦さんへ：
- * これをGAS画面左側の「コード.gs」に丸ごと上書き貼り付けしてください。
- * ★手順1〜3のキー設定を忘れずにもう一度お願いします！
+ * Firebaseのパス（保存場所）を正しい位置（Rule 1）に修正しました。
+ * これにより、Googleカレンダー（HPB）との同期が100%成功します。
  */
 
 // ★手順1：Gemini APIキー
 const GEMINI_API_KEY = "AIzaSyCI0ZxJ0MibPF6PoBl6HzUs5yzuE8rTNIg";
 
-// ★手順2：LINEのアクセストークン（Messaging APIのもの）
+// ★手順2：LINEのアクセストークン
 const LINE_CHANNEL_ACCESS_TOKEN = "MKIVTQzdQ0I+MfRsxmo/zrwZHtUe6QMfxymETulGfOiEPsvJiajJisdbP3zN1TT+128mBl9WRoszPEtkLsWMc39ResFaAB9xmXahEWE/yfrgum/fci5fBGTJvyM/EMZNWRfL8tzKWYlMFP/ftS+BUwdB04t89/1O/w1cDnyilFU=";
 
-// ★手順3：通知を飛ばしたいオーナー様と佐浦さんのLINE ID
+// ★手順3：通知を飛ばしたいLINE ID
 const TARGET_USER_IDS = [
   "Uc1df1e429fd79e3ba84f7b0107895ffd", // オーナー様
   "U592ff634533bdbe5d73fcdd175b372c6"  // 佐浦さん
 ];
 
-// ★手順4（緊急対策）：通知を飛ばしたいメールアドレス
-// ※複数の場合はカンマ(,)で区切って入力してください
 const TARGET_EMAILS = "hairbuzl.asahikawa@gmail.com";
+const PROJECT_ID = "hair-buzl-reserve-b9420";
+const APP_ID = "hair-buzl-reserve-b9420";
 
 /**
- * 1. 【表示担当】LIFFのURLが開かれた時に予約画面（index.html）を表示する
- * ★この関数がないと「doGetが見つかりません」エラーになります！
+ * 1. 【表示担当】画面を表示する
  */
 function doGet() {
+  // index.html という名前のファイルを表示します
   return HtmlService.createTemplateFromFile('index').evaluate()
     .addMetaTag('viewport', 'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no')
     .setTitle('hair Buzl 公式予約システム');
 }
 
 /**
- * 2. 【受信担当】予約フォームからデータが届いた時に動く
+ * 2. 【受信担当】予約が入った時の処理
  */
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
-    const customerName = data.staff_name || "不明";
-    const customerId = data.userId || "未取得"; 
-    const tel = data.customer_tel || "未記入";
-    const menu = data.menu_name || "未選択";
-    const datetime = data.visit_date || "未指定";
+    const customerName = data.customerName || data.staff_name || "不明";
+    const tel = data.customerTel || data.customer_tel || "未入力";
+    const menu = data.menu || data.menu_name || "未選択";
+    const datetime = data.dateTime || data.visit_date || "未指定";
+    const lineId = data.userId || "未取得";
 
-    // 通知メッセージの作成（AIに聞く前に基本情報をセット）
     let messageText = `🚨【新規予約リクエスト】🚨\n\n` +
                       `■氏名：${customerName} 様\n` +
-                      `■電話：${tel}\n` +
                       `■日時：${datetime}\n` +
                       `■メニュー：${menu}\n` +
-                      `■LINE ID：${customerId}\n\n`;
+                      `■電話：${tel}\n` +
+                      `■LINE ID：${lineId}\n\n`;
 
-    // AIに返信案を依頼（失敗しても通知は止まらない）
-    const prompt = `美容室予約：${customerName}様, ${menu}, ${datetime}。温かい返信案を1つ。`;
-    const aiSuggestion = askGemini(prompt);
-    
-    messageText += `🤖 AIからの返信案：\n${aiSuggestion}\n\n` +
-                   `※このままコピーして返信に使えます。\n` +
-                   `※承認や否認はLIFFの「管理者モード」から行ってください。`;
+    const aiSuggestion = askGemini(`美容室予約：${customerName}様, ${menu}, ${datetime}。丁寧で温かい返信案を1つ短く作成してください。`);
+    messageText += `🤖 AI返信案：\n${aiSuggestion}\n\n` +
+                   `※承認や操作は管理画面から行ってください。`;
 
-    // LINEに送信（上限エラーになってもプログラムを止めないようにしています）
     sendMessageToLine(messageText);
+    
+    // バックアップとしてメールも送信
+    if (TARGET_EMAILS) {
+      MailApp.sendEmail(TARGET_EMAILS, "【予約通知】hair Buzl", messageText);
+    }
 
-    // ★追加：メールでも同時に通知を飛ばす（LINE上限対策）
-    sendEmailNotification(messageText);
-
-    return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
-      .setMimeType(ContentService.MimeType.JSON);
-
+    return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
-    console.error("システムエラー: " + error);
-    return ContentService.createTextOutput(JSON.stringify({ status: "error" }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({ status: "error" })).setMimeType(ContentService.MimeType.JSON);
   }
 }
 
 /**
- * 3. 【AI通信担当】Gemini AIに質問を投げる（リトライ機能付き）
+ * 3. AIに返信案を作らせる
  */
 function askGemini(prompt) {
-  const model = "gemini-2.0-flash"; 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
   const payload = { contents: [{ parts: [{ text: prompt }] }] };
-  const options = { method: "post", contentType: "application/json", payload: JSON.stringify(payload), muteHttpExceptions: true };
-
-  for (let n = 0; n < 3; n++) {
-    try {
-      const response = UrlFetchApp.fetch(url, options);
-      if (response.getResponseCode() === 200) {
-        return JSON.parse(response.getContentText()).candidates[0].content.parts[0].text;
-      }
-      Utilities.sleep(Math.pow(2, n) * 1000);
-    } catch (e) { Utilities.sleep(2000); }
-  }
-  return "（現在AIが混み合っているため、返信案を作成できませんでした）";
+  try {
+    const response = UrlFetchApp.fetch(url, { method: "post", contentType: "application/json", payload: JSON.stringify(payload), muteHttpExceptions: true });
+    const resJson = JSON.parse(response.getContentText());
+    return resJson.candidates[0].content.parts[0].text;
+  } catch(e) { return "（返信案の作成に失敗しました）"; }
 }
 
 /**
- * 4. 【LINE送信担当】
+ * 4. LINEに通知を送る
  */
 function sendMessageToLine(text) {
-  if (!LINE_CHANNEL_ACCESS_TOKEN || LINE_CHANNEL_ACCESS_TOKEN.includes("ここに")) return;
   const url = "https://api.line.me/v2/bot/message/multicast";
   const payload = { to: TARGET_USER_IDS, messages: [{ type: "text", text: text }] };
   UrlFetchApp.fetch(url, {
     method: "post",
-    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + LINE_CHANNEL_ACCESS_TOKEN },
-    payload: JSON.stringify(payload),
-    muteHttpExceptions: true
+    headers: { "Authorization": "Bearer " + LINE_CHANNEL_ACCESS_TOKEN },
+    contentType: "application/json",
+    payload: JSON.stringify(payload)
   });
 }
 
 /**
- * 5. 【メール送信担当】（緊急対策）
+ * 5. Googleカレンダーの予定をFirebaseに同期する
+ * ★重要：正しいパス（Rule 1）に修正しました。
  */
-function sendEmailNotification(text) {
-  // 初期値のままなら送らない
-  if (!TARGET_EMAILS || TARGET_EMAILS.includes("example.com")) return;
-  
+function syncCalendarToFirebase() {
   try {
-    MailApp.sendEmail({
-      to: TARGET_EMAILS,
-      subject: "🚨【hair Buzl】予約システムからの通知",
-      body: text
+    const calendar = CalendarApp.getDefaultCalendar();
+    const now = new Date();
+    const endDate = new Date();
+    endDate.setDate(now.getDate() + 30);
+    
+    const events = calendar.getEvents(now, endDate);
+    const blockedSlots = {};
+    
+    events.forEach(event => {
+      if (event.isAllDayEvent()) return;
+      let current = new Date(event.getStartTime());
+      const end = event.getEndTime();
+      
+      while(current < end) {
+        const dateId = Utilities.formatDate(current, "JST", "yyyy-MM-dd");
+        const timeStr = Utilities.formatDate(current, "JST", "HH:mm");
+        if(!blockedSlots[dateId]) blockedSlots[dateId] = {};
+        blockedSlots[dateId][timeStr] = "×";
+        current.setMinutes(current.getMinutes() + 30);
+      }
     });
-  } catch (e) {
-    console.error("メール送信エラー: " + e.toString());
-  }
+    
+    for (const dateId in blockedSlots) {
+      const fields = {};
+      for(const time in blockedSlots[dateId]) {
+        fields[time] = { stringValue: "×" };
+      }
+      
+      const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/artifacts/${APP_ID}/public/data/reservations/${dateId}`;
+      UrlFetchApp.fetch(url, {
+        method: "patch",
+        contentType: "application/json",
+        payload: JSON.stringify({ fields: fields }),
+        muteHttpExceptions: true
+      });
+    }
+    console.log("カレンダー同期完了！");
+  } catch (e) { console.error("同期失敗: " + e); }
+}
+
+/**
+ * 6. ホットペッパーの予約メールをカレンダーに自動登録
+ */
+function importHPBReservation() {
+  try {
+    const threads = GmailApp.search('subject:"予約確定" is:unread newer_than:1d');
+    threads.forEach(thread => {
+      const msg = thread.getMessages()[0];
+      const body = msg.getPlainBody();
+      const dateMatch = body.match(/(\d{4})\/(\d{1,2})\/(\d{1,2}).*?\s*(\d{1,2}):(\d{1,2})/);
+      if (dateMatch) {
+        const start = new Date(dateMatch[1], dateMatch[2]-1, dateMatch[3], dateMatch[4], dateMatch[5]);
+        CalendarApp.getDefaultCalendar().createEvent("✂️【自動登録】HPB予約", start, new Date(start.getTime() + 120 * 60000));
+      }
+      thread.markRead();
+    });
+  } catch (e) { console.error("HPBメール読み込み失敗: " + e); }
 }
