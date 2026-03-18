@@ -86,6 +86,15 @@
         .gallery-item:hover img {
             transform: scale(1.08);
         }
+
+        /* 予約ボタンのホバーエフェクト強化 */
+        .btn-reservation {
+            transition: all 0.3s ease;
+        }
+        .btn-reservation:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -105,8 +114,8 @@
                     <a href="#gallery" class="text-sm font-elegant tracking-widest text-white hover:text-stone-300 transition nav-link">Gallery</a>
                     <a href="#stylist" class="text-sm font-elegant tracking-widest text-white hover:text-stone-300 transition nav-link">Stylist</a>
                     <a href="#access" class="text-sm font-elegant tracking-widest text-white hover:text-stone-300 transition nav-link">Access</a>
-                    <!-- 予約ボタンを復活 -->
-                    <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="border border-white text-white px-6 py-2 text-sm hover:bg-white hover:text-stone-900 transition nav-btn font-bold">
+                    <!-- ヘッダー予約ボタン：クラス名を整理 -->
+                    <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" id="nav-btn" class="border-2 border-white text-white px-8 py-2.5 text-sm hover:bg-white hover:text-stone-900 transition btn-reservation font-bold rounded-sm">
                         Reservation
                     </a>
                 </nav>
@@ -124,15 +133,14 @@
                 <a href="#gallery" class="text-2xl font-elegant tracking-widest text-stone-300 uppercase">Gallery</a>
                 <a href="#stylist" class="text-2xl font-elegant tracking-widest text-stone-300 uppercase">Stylist</a>
                 <a href="#access" class="text-2xl font-elegant tracking-widest text-stone-300 uppercase">Access</a>
-                <!-- スマホメニューの予約ボタンを復活 -->
-                <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="mt-8 bg-white text-stone-900 px-10 py-3 text-lg font-bold tracking-wider uppercase">Web Reservation</a>
+                <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="mt-8 bg-white text-stone-900 px-10 py-3 text-lg font-bold tracking-wider uppercase rounded-sm">Web Reservation</a>
             </div>
         </div>
     </header>
 
     <section class="hero-image h-screen flex items-center justify-center px-4 relative">
         <div class="z-10 text-center">
-            <h1 class="text-4xl md:text-6xl text-white font-serif-jp font-light mb-8 tracking-[0.2em] masonry-title leading-relaxed">髪と心に、<br class="md:hidden">新しい扉を。</h1>
+            <h1 class="text-4xl md:text-6xl text-white font-serif-jp font-light mb-8 tracking-[0.2em] leading-relaxed">髪と心に、<br class="md:hidden">新しい扉を。</h1>
             <p class="text-xs md:text-sm text-stone-300 mb-12 font-light tracking-[0.3em] uppercase">Private Hair Salon in Asahikawa</p>
         </div>
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
@@ -263,9 +271,9 @@
                     </ul>
                 </div>
             </div>
-            <!-- 中盤の大きな予約ボタンを復活 -->
+            <!-- 中盤の大きな予約ボタン：常に視認性の高いダークトーン -->
             <div class="mt-24 text-center">
-                <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="inline-block bg-stone-800 text-white px-16 py-5 rounded-full font-bold tracking-widest hover:scale-105 transition shadow-2xl text-xs uppercase">
+                <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="inline-block bg-stone-800 text-white px-16 py-5 rounded-full font-bold tracking-widest hover:scale-105 transition shadow-2xl text-xs uppercase btn-reservation">
                     Check Reservation / 空き状況を確認して予約する
                 </a>
             </div>
@@ -358,7 +366,6 @@
         <div class="max-w-7xl mx-auto px-6 text-white">
             <img src="logo.png" alt="Hair Buzl" class="h-10 mx-auto filter invert mb-16 brightness-0" onerror="this.style.display='none'">
             <div class="flex justify-center space-x-14 mb-16 text-stone-500 text-[10px] tracking-[0.4em] uppercase font-bold">
-                <!-- フッターの予約リンクを復活 -->
                 <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="hover:text-white transition">Reservation</a>
                 <a href="https://www.instagram.com/hair_buzl/" target="_blank" class="hover:text-white transition">Instagram</a>
             </div>
@@ -366,9 +373,8 @@
         </div>
     </footer>
 
-    <!-- 右下のフローティング予約ボタンを復活 -->
     <div id="floating-btn" class="fixed bottom-8 right-8 z-40 opacity-0 translate-y-4 transition-all duration-700 pointer-events-none">
-        <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="flex items-center justify-center bg-stone-800 text-white px-8 py-5 rounded-full shadow-2xl hover:scale-105 transition tracking-[0.2em] text-[10px] font-bold uppercase">
+        <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="flex items-center justify-center bg-stone-800 text-white px-8 py-5 rounded-full shadow-2xl hover:scale-105 transition tracking-[0.2em] text-[10px] font-bold uppercase btn-reservation">
             <i class="fa-regular fa-calendar-check mr-4 text-lg"></i> Web Reservation
         </a>
     </div>
@@ -383,27 +389,47 @@
             const header = document.getElementById('header');
             const logoImg = document.getElementById('logo-img');
             const navLinks = document.querySelectorAll('.nav-link');
-            const navBtn = document.querySelector('.nav-btn');
+            const navBtn = document.getElementById('nav-btn');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const floatingBtn = document.getElementById('floating-btn');
 
             window.addEventListener('scroll', () => {
                 const scrolled = window.scrollY > 100;
+                
+                // ヘッダー背景
                 header.classList.toggle('bg-white/95', scrolled);
                 header.classList.toggle('shadow-sm', scrolled);
                 header.classList.toggle('py-2', scrolled);
                 header.classList.toggle('py-4', !scrolled);
+                
+                // ロゴ
                 logoImg.classList.toggle('invert', !scrolled);
                 logoImg.classList.toggle('brightness-0', !scrolled);
+                
+                // ナビリンクの色
                 navLinks.forEach(link => {
                     link.classList.toggle('text-stone-600', scrolled);
                     link.classList.toggle('text-white', !scrolled);
                 });
-                if(navBtn) {
-                    navBtn.classList.toggle('border-stone-800', scrolled);
-                    navBtn.classList.toggle('text-stone-800', scrolled);
-                    navBtn.classList.toggle('border-white', !scrolled);
-                    navBtn.classList.toggle('text-white', !scrolled);
+                
+                // ハンバーガーメニューの色
+                if(mobileMenuBtn) {
+                    mobileMenuBtn.classList.toggle('text-stone-800', scrolled);
+                    mobileMenuBtn.classList.toggle('text-white', !scrolled);
                 }
+
+                // ヘッダー予約ボタンのスタイル切り替え
+                if(navBtn) {
+                    if(scrolled) {
+                        navBtn.classList.remove('border-white', 'text-white');
+                        navBtn.classList.add('border-stone-800', 'text-stone-800', 'bg-stone-800/5');
+                    } else {
+                        navBtn.classList.add('border-white', 'text-white');
+                        navBtn.classList.remove('border-stone-800', 'text-stone-800', 'bg-stone-800/5');
+                    }
+                }
+
+                // 追従ボタンの表示
                 if(floatingBtn) {
                     floatingBtn.classList.toggle('opacity-0', !scrolled);
                     floatingBtn.classList.toggle('translate-y-4', !scrolled);
@@ -415,14 +441,18 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const closeBtn = document.getElementById('mobile-close-btn');
 
-            mobileBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('hidden');
-                setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
-            });
-            closeBtn.addEventListener('click', () => {
-                mobileMenu.classList.add('opacity-0');
-                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
-            });
+            if(mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.remove('hidden');
+                    setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+                });
+            }
+            if(closeBtn && mobileMenu) {
+                closeBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('opacity-0');
+                    setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                });
+            }
         });
     </script>
 </body>
