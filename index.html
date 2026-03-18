@@ -28,7 +28,6 @@
         .font-elegant { font-family: 'Cormorant Garamond', serif; }
 
         .hero-image {
-            /* GitHubリポジトリ内の hero.jpg を使用 */
             background-image: linear-gradient(rgba(40, 35, 30, 0.3), rgba(40, 35, 30, 0.4)), url('hero.jpg');
             background-size: cover;
             background-position: center;
@@ -70,6 +69,23 @@
             margin: 0 10px;
             opacity: 0.6;
         }
+
+        .gallery-item {
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background-color: #eee;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
     </style>
 </head>
 <body>
@@ -79,7 +95,6 @@
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0 flex items-center h-full">
                     <a href="#" class="h-12 md:h-16 inline-block">
-                        <!-- logo.png を使用 -->
                         <img src="logo.png" alt="Hair Buzl" class="h-full object-contain filter invert brightness-0" id="logo-img" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
                         <span id="alt-logo" class="hidden font-elegant text-2xl tracking-widest text-white">Buzl</span>
                     </a>
@@ -87,10 +102,10 @@
                 <nav class="hidden md:flex space-x-8 items-center">
                     <a href="#concept" class="text-sm font-elegant tracking-widest text-white hover:text-stone-300 transition nav-link">Concept</a>
                     <a href="#menu" class="text-sm font-elegant tracking-widest text-white hover:text-stone-300 transition nav-link">Menu</a>
+                    <a href="#gallery" class="text-sm font-elegant tracking-widest text-white hover:text-stone-300 transition nav-link">Gallery</a>
                     <a href="#stylist" class="text-sm font-elegant tracking-widest text-white hover:text-stone-300 transition nav-link">Stylist</a>
                     <a href="#access" class="text-sm font-elegant tracking-widest text-white hover:text-stone-300 transition nav-link">Access</a>
-                    
-                    <!-- 予約ボタンのリンク先 (GASのURL) -->
+                    <!-- 予約ボタンを復活 -->
                     <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="border border-white text-white px-6 py-2 text-sm hover:bg-white hover:text-stone-900 transition nav-btn font-bold">
                         Reservation
                     </a>
@@ -106,9 +121,10 @@
             <div class="flex flex-col items-center space-y-8">
                 <a href="#concept" class="text-2xl font-elegant tracking-widest text-stone-300 uppercase">Concept</a>
                 <a href="#menu" class="text-2xl font-elegant tracking-widest text-stone-300 uppercase">Menu</a>
+                <a href="#gallery" class="text-2xl font-elegant tracking-widest text-stone-300 uppercase">Gallery</a>
                 <a href="#stylist" class="text-2xl font-elegant tracking-widest text-stone-300 uppercase">Stylist</a>
                 <a href="#access" class="text-2xl font-elegant tracking-widest text-stone-300 uppercase">Access</a>
-                
+                <!-- スマホメニューの予約ボタンを復活 -->
                 <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="mt-8 bg-white text-stone-900 px-10 py-3 text-lg font-bold tracking-wider uppercase">Web Reservation</a>
             </div>
         </div>
@@ -116,7 +132,7 @@
 
     <section class="hero-image h-screen flex items-center justify-center px-4 relative">
         <div class="z-10 text-center">
-            <h1 class="text-4xl md:text-6xl text-white font-serif-jp font-light mb-8 tracking-[0.2em] leading-relaxed">髪と心に、<br class="md:hidden">新しい扉を。</h1>
+            <h1 class="text-4xl md:text-6xl text-white font-serif-jp font-light mb-8 tracking-[0.2em] masonry-title leading-relaxed">髪と心に、<br class="md:hidden">新しい扉を。</h1>
             <p class="text-xs md:text-sm text-stone-300 mb-12 font-light tracking-[0.3em] uppercase">Private Hair Salon in Asahikawa</p>
         </div>
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
@@ -135,8 +151,7 @@
             </div>
             <div class="w-full lg:w-5/12 relative fade-in-up">
                 <div class="aspect-[4/5] overflow-hidden shadow-2xl">
-                    <!-- GitHubリポジトリ内の concept.jpg を使用 -->
-                    <img src="concept.jpg" alt="Interior" class="w-full h-full object-cover">
+                    <img src="concept.jpg" alt="Hair Buzl Interior" class="w-full h-full object-cover">
                 </div>
                 <div class="absolute -bottom-8 -right-8 w-full h-full border border-stone-200 -z-10"></div>
             </div>
@@ -164,7 +179,6 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-x-16 gap-y-24">
-                
                 <!-- 1. Cut -->
                 <div class="fade-in-up">
                     <h3 class="text-xl font-serif-jp text-stone-800 border-b border-stone-200 pb-5 mb-10 tracking-widest flex items-center italic">
@@ -248,84 +262,9 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- 3. Texture -->
-                <div class="fade-in-up">
-                    <h3 class="text-xl font-serif-jp text-stone-800 border-b border-stone-200 pb-5 mb-10 tracking-widest flex items-center italic">
-                        <span class="w-1 h-1 bg-stone-400 rounded-full mr-4"></span>Perm & Straight
-                    </h3>
-                    <ul class="space-y-10">
-                        <li>
-                            <div class="flex justify-between items-baseline mb-2">
-                                <span class="text-sm font-medium text-stone-900">フルボ酸配合 艶髪縮毛矯正 <small class="text-stone-400 font-normal ml-1">(カット込)</small></span><div class="menu-dot"></div><span class="font-serif-jp">¥16,500</span>
-                            </div>
-                            <p class="text-[11px] text-stone-500 leading-relaxed">当店の看板メニュー。シルクのような柔らかい艶感を叶えます。<span class="ml-2 border border-stone-200 px-1 rounded">180分</span></p>
-                        </li>
-                        <li>
-                            <div class="flex justify-between items-baseline mb-2">
-                                <span class="text-sm font-medium">フルボ酸配合 部分矯正</span><div class="menu-dot"></div><span class="font-serif-jp">¥5,500</span>
-                            </div>
-                            <p class="text-[11px] text-stone-500 leading-relaxed">前髪や顔周りなど、特にクセが気になる部分をピンポイントでケア。<span class="ml-2 border border-stone-200 px-1 rounded">90分</span></p>
-                        </li>
-                        <li>
-                            <div class="flex justify-between items-baseline mb-2">
-                                <span class="text-sm font-medium">フルボ酸配合 艶髪パーマ <small class="text-stone-400 font-normal ml-1">(カット込)</small></span><div class="menu-dot"></div><span class="font-serif-jp">¥9,900</span>
-                            </div>
-                            <p class="text-[11px] text-stone-500 leading-relaxed">乾燥やダメージを防ぎ、弾むような柔らかいカールを実現します。<span class="ml-2 border border-stone-200 px-1 rounded">120分</span></p>
-                        </li>
-                        <li>
-                            <div class="flex justify-between items-baseline mb-2">
-                                <span class="text-sm font-medium">セラミックスカール <small class="text-stone-400 font-normal ml-1">(デジパ・カット込)</small></span><div class="menu-dot"></div><span class="font-serif-jp">¥15,000</span>
-                            </div>
-                            <p class="text-[11px] text-stone-500 leading-relaxed">コテで巻いたような立体ウェーブを長期間キープ。極上の手触り。<span class="ml-2 border border-stone-200 px-1 rounded">150分</span></p>
-                        </li>
-                        <li>
-                            <div class="flex justify-between items-baseline mb-2">
-                                <span class="text-sm font-medium">特殊パーマ <small class="text-stone-400 font-normal ml-1">(スパイラル・ツイスト)</small></span><div class="menu-dot"></div><span class="font-serif-jp">¥11,000</span>
-                            </div>
-                            <p class="text-[11px] text-stone-500 leading-relaxed">高度な技術を駆使し、立体的なボリューム感と束感を作り上げます。<span class="ml-2 border border-stone-200 px-1 rounded">150分</span></p>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 4. Care -->
-                <div class="fade-in-up delay-100">
-                    <h3 class="text-xl font-serif-jp text-stone-800 border-b border-stone-200 pb-5 mb-10 tracking-widest flex items-center italic">
-                        <span class="w-1 h-1 bg-stone-400 rounded-full mr-4"></span>Care & Spa
-                    </h3>
-                    <ul class="space-y-10">
-                        <li>
-                            <div class="flex justify-between items-baseline mb-2">
-                                <span class="text-sm font-medium">酸熱トリートメント</span><div class="menu-dot"></div><span class="font-serif-jp">¥7,700</span>
-                            </div>
-                            <p class="text-[11px] text-stone-500 leading-relaxed">熱で髪を内側から補強する最先端ケア。鏡のような艶と滑らかさ。<span class="ml-2 border border-stone-200 px-1 rounded">90分</span></p>
-                        </li>
-                        <li>
-                            <div class="flex justify-between items-baseline mb-2">
-                                <span class="text-sm font-medium">フルボ酸配合 艶髪トリートメント</span><div class="menu-dot"></div><span class="font-serif-jp">¥2,950</span>
-                            </div>
-                            <p class="text-[11px] text-stone-500 leading-relaxed">豊富なミネラルとアミノ酸が深部まで浸透。ダメージを効率よく補給。<span class="ml-2 border border-stone-200 px-1 rounded">30分</span></p>
-                        </li>
-                        <li>
-                            <div class="flex justify-between items-baseline mb-2">
-                                <span class="text-sm font-medium">癒やしのヘッドスパ</span><div class="menu-dot"></div><span class="font-serif-jp">¥3,500</span>
-                            </div>
-                            <p class="text-[11px] text-stone-500 leading-relaxed">溜まった疲れを解きほぐす至福の時間。健やかな頭皮環境を整えます。<span class="ml-2 border border-stone-200 px-1 rounded">30分</span></p>
-                        </li>
-                        <li>
-                            <div class="flex justify-between items-baseline mb-2">
-                                <span class="text-sm font-medium">シャンプー・ブロー</span><div class="menu-dot"></div><span class="font-serif-jp">¥2,200</span>
-                            </div>
-                            <p class="text-[11px] text-stone-500 leading-relaxed">絶妙なボリューム感とツヤを創り上げます。リフレッシュにも最適。<span class="ml-2 border border-stone-200 px-1 rounded">30分</span></p>
-                        </li>
-                    </ul>
-                </div>
-
             </div>
-            
+            <!-- 中盤の大きな予約ボタンを復活 -->
             <div class="mt-24 text-center">
-                <p class="text-[10px] text-stone-400 tracking-[0.1em] mb-12 max-w-lg mx-auto leading-relaxed">※カラー・パーマ・矯正メニューは、髪の長さによりロング料金(¥500〜¥1,000)を頂戴する場合がございます。詳細は予約画面にてご確認ください。</p>
-                
                 <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="inline-block bg-stone-800 text-white px-16 py-5 rounded-full font-bold tracking-widest hover:scale-105 transition shadow-2xl text-xs uppercase">
                     Check Reservation / 空き状況を確認して予約する
                 </a>
@@ -333,13 +272,29 @@
         </div>
     </section>
 
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-32 px-6 lg:px-12 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24 fade-in-up">
+                <p class="text-stone-400 font-elegant tracking-[0.3em] uppercase text-xs mb-2">Atmosphere</p>
+                <h2 class="text-5xl font-elegant text-stone-800 tracking-wider deco-line uppercase">Gallery</h2>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 fade-in-up">
+                <div class="gallery-item shadow-sm"><img src="photo3.jpg" alt="Interior View 1"></div>
+                <div class="gallery-item shadow-sm"><img src="photo4.jpg" alt="Interior View 2"></div>
+                <div class="gallery-item shadow-sm"><img src="photo5.jpg" alt="Interior View 3"></div>
+                <div class="gallery-item shadow-sm"><img src="photo8.jpg" alt="Interior View 4"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- Stylist Section -->
-    <section id="stylist" class="py-32 px-6 lg:px-12 bg-white">
+    <section id="stylist" class="py-32 px-6 lg:px-12 bg-stone-50">
         <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16 lg:gap-24">
             <div class="relative w-64 h-64 shrink-0 fade-in-up">
                 <div class="absolute inset-0 border border-stone-300 rounded-full scale-110 -z-10"></div>
-                <!-- photo2.jpg を使用 (店舗イメージ/道具のイメージとして) -->
-                <img src="photo2.jpg" alt="Professional Tools" class="w-full h-full object-cover rounded-full shadow-2xl">
+                <img src="photo2.jpg" alt="Hair Buzl Stylist" class="w-full h-full object-cover rounded-full shadow-2xl">
             </div>
             <div class="fade-in-up text-center md:text-left">
                 <p class="text-stone-400 font-elegant tracking-widest text-[11px] mb-3 uppercase">Owner Stylist</p>
@@ -401,9 +356,9 @@
 
     <footer class="bg-stone-900 py-20 text-center">
         <div class="max-w-7xl mx-auto px-6 text-white">
-            <!-- logo.png を使用 -->
             <img src="logo.png" alt="Hair Buzl" class="h-10 mx-auto filter invert mb-16 brightness-0" onerror="this.style.display='none'">
             <div class="flex justify-center space-x-14 mb-16 text-stone-500 text-[10px] tracking-[0.4em] uppercase font-bold">
+                <!-- フッターの予約リンクを復活 -->
                 <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="hover:text-white transition">Reservation</a>
                 <a href="https://www.instagram.com/hair_buzl/" target="_blank" class="hover:text-white transition">Instagram</a>
             </div>
@@ -411,6 +366,7 @@
         </div>
     </footer>
 
+    <!-- 右下のフローティング予約ボタンを復活 -->
     <div id="floating-btn" class="fixed bottom-8 right-8 z-40 opacity-0 translate-y-4 transition-all duration-700 pointer-events-none">
         <a href="https://script.google.com/macros/s/AKfycbwheghSBC8E2-B7nW0Zz5AIc1tY9tnspoozjd3DV4RThr3jcdt0lofWQCVaz6ZXW32zlw/exec" class="flex items-center justify-center bg-stone-800 text-white px-8 py-5 rounded-full shadow-2xl hover:scale-105 transition tracking-[0.2em] text-[10px] font-bold uppercase">
             <i class="fa-regular fa-calendar-check mr-4 text-lg"></i> Web Reservation
@@ -442,13 +398,17 @@
                     link.classList.toggle('text-stone-600', scrolled);
                     link.classList.toggle('text-white', !scrolled);
                 });
-                navBtn.classList.toggle('border-stone-800', scrolled);
-                navBtn.classList.toggle('text-stone-800', scrolled);
-                navBtn.classList.toggle('border-white', !scrolled);
-                navBtn.classList.toggle('text-white', !scrolled);
-                floatingBtn.classList.toggle('opacity-0', !scrolled);
-                floatingBtn.classList.toggle('translate-y-4', !scrolled);
-                floatingBtn.classList.toggle('pointer-events-none', !scrolled);
+                if(navBtn) {
+                    navBtn.classList.toggle('border-stone-800', scrolled);
+                    navBtn.classList.toggle('text-stone-800', scrolled);
+                    navBtn.classList.toggle('border-white', !scrolled);
+                    navBtn.classList.toggle('text-white', !scrolled);
+                }
+                if(floatingBtn) {
+                    floatingBtn.classList.toggle('opacity-0', !scrolled);
+                    floatingBtn.classList.toggle('translate-y-4', !scrolled);
+                    floatingBtn.classList.toggle('pointer-events-none', !scrolled);
+                }
             });
 
             const mobileBtn = document.getElementById('mobile-menu-btn');
