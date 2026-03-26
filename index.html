@@ -74,28 +74,87 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
+      "@graph": [
         {
-          "@type": "Question",
-          "name": "旭川の冬の乾燥と静電気で髪がパサパサになって悩んでいます。何かおすすめのメニューはありますか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "氷点下の外気と強力な室内暖房による「極度の乾燥（絶対湿度の低下）」には、当店こだわりの『フルボ酸』を贅沢に配合した高保湿メニュー（カラー・縮毛矯正・トリートメント等）が大変おすすめです。髪の深部に水分とミネラルを補給し、静電気や摩擦ダメージから髪を強力にブロックします。ぜひ一度ご相談ください。"
-          }
+          "@type": "HairSalon",
+          "@id": "https://hair-buzl.github.io/hair-buzl-website-/#salon",
+          "name": "Hair Buzl（ヘアーバズール）",
+          "image": [
+            "https://hair-buzl.github.io/hair-buzl-website-/concept.jpg"
+          ],
+          "url": "https://hair-buzl.github.io/hair-buzl-website-/",
+          "telephone": "+81-166-37-8631",
+          "priceRange": "¥¥",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "東光5条6丁目3番5号",
+            "addressLocality": "旭川市",
+            "addressRegion": "北海道",
+            "postalCode": "078-8345",
+            "addressCountry": "JP"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "43.7429",
+            "longitude": "142.4002"
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              "opens": "09:30",
+              "closes": "19:00"
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Sunday", "PublicHolidays"],
+              "opens": "09:30",
+              "closes": "18:00"
+            }
+          ],
+          "amenityFeature": [
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "専用駐車場あり（毎朝除雪完備）",
+              "value": "True"
+            },
+            {
+              "@type": "LocationFeatureSpecification",
+              "name": "SUVなどの大型車対応スペース",
+              "value": "True"
+            }
+          ],
+          "sameAs": [
+            "https://lin.ee/L8Z2tVsG",
+            "https://www.instagram.com/hair_buzl/"
+          ]
         },
         {
-          "@type": "Question",
-          "name": "冬場に車で来店したいのですが、駐車場の雪かきや駐車スペースが不安です。",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "当店はお店の前に専用駐車場をご用意しております。雪の多い旭川の冬でも、お客様がスムーズかつ安全に駐車できるよう、毎朝オーナーがしっかりと除雪を行ってスペースを確保しております。ご来店の際にお客様に雪かきをしていただく手間はございませんので、お車で安心してご来店ください。"
-          }
+          "@type": "FAQPage",
+          "@id": "https://hair-buzl.github.io/hair-buzl-website-/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "旭川の冬の乾燥と静電気で髪がパサパサになって悩んでいます。何かおすすめのメニューはありますか？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "氷点下の外気と強力な室内暖房による「極度の乾燥（絶対湿度の低下）」には、当店こだわりの『フルボ酸』を贅沢に配合した高保湿メニュー（カラー・縮毛矯正・トリートメント等）が大変おすすめです。髪の深部に水分とミネラルを補給し、静電気や摩擦ダメージから髪を強力にブロックします。ぜひ一度ご相談ください。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "冬場に車で来店したいのですが、駐車場の雪かきや駐車スペースが不安です。",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "当店はお店の前に専用駐車場をご用意しております。雪の多い旭川の冬でも、お客様がスムーズかつ安全に駐車できるよう、毎朝オーナーがしっかりと除雪を行ってスペースを確保しております。ご来店の際にお客様に雪かきをしていただく手間はございませんので、お車で安心してご来店ください。"
+              }
+            }
+          ]
         }
       ]
     }
     </script>
-    </head>
+</head>
 <body>
 
     <header id="header" class="fixed w-full z-50 transition-all duration-500 bg-transparent py-4">
@@ -482,6 +541,7 @@
             </div>
         </div>
     </section>
+    
     <section id="access" class="py-24 md:py-32 px-4 md:px-6 lg:px-12 bg-[#f4f2f0] overflow-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 md:mb-24 fade-in-up">
@@ -497,7 +557,8 @@
                             <span class="w-16 md:w-24 shrink-0 text-[10px] font-elegant uppercase tracking-widest text-stone-400 pt-1">Address</span>
                             <div class="text-sm font-light text-stone-600 leading-relaxed flex-1">
                                 〒078-8345<br>北海道旭川市東光5条6丁目3番5号<br>
-                                <span class="text-stone-400 text-[11px] inline-block mt-1">※魚べい旭川東光店様 向かい</span>
+                                <span class="text-stone-400 text-[11px] inline-block mt-1">※魚べい旭川東光店様 向かい</span><br>
+                                <span class="text-stone-800 font-bold text-xs inline-block mt-3 border border-stone-300 px-3 py-1 rounded-sm"><i class="fa-solid fa-car mr-2"></i>専用駐車場あり（SUV対応・毎朝除雪完備）</span>
                                 <div class="mt-4">
                                     <a href="https://www.google.com/maps/search/?api=1&query=北海道旭川市東光5条6丁目3番5号" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-xs font-bold text-stone-500 hover:text-stone-900 border-b border-stone-500 pb-1 transition">
                                         <i class="fa-solid fa-map-location-dot mr-2"></i>Googleマップで見る
